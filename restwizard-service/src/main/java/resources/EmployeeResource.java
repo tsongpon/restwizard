@@ -1,35 +1,46 @@
 package resources;
 
 import com.codahale.metrics.annotation.Timed;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import domain.Employee;
+import responsemapper.EmployeeMapper;
 import service.EmployeeService;
-import transport.Employee;
+import transport.EmployeeTransport;
+import transport.ResponseTransport;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  *
  */
 
-@Component
 @Path("/employees")
 @Produces(MediaType.APPLICATION_JSON)
 public class EmployeeResource {
 
-    private EmployeeService employeeService;
+    private EmployeeService employeeServic;
+    private EmployeeMapper employeeMapper;
 
-    @Autowired
-    public void setEmployeeService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeResource(EmployeeService employeeServic, EmployeeMapper mapper) {
+        this.employeeServic = employeeServic;
+        this.employeeMapper = mapper;
     }
 
     @GET
     @Timed
-    public Employee getEmp() {
-        return employeeService.getEmp();
+    public ResponseTransport<EmployeeTransport> getEmp() {
+        List<Employee> employees = employeeServic.getEmp();
+        return employeeMapper.map(employees);
+    }
+
+    @GET
+    @Path("{id}")
+    public EmployeeTransport getById(@PathParam("id")Long id) {
+        Employee employee = employeeServic.getEmp(id);
+        return employeeMapper.map(employee);
     }
 }

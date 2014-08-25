@@ -1,15 +1,26 @@
 package service;
 
-import org.springframework.stereotype.Service;
-import transport.Employee;
+import domain.Employee;
+import repository.EmlooyeeRepository;
+
+import java.util.List;
 
 /**
  *
  */
-@Service
 public class EmployeeService {
 
-    public Employee getEmp() {
-        return new Employee("1", "tum", "coder");
+    private EmlooyeeRepository eplooyeeRepository;
+
+    public EmployeeService(EmlooyeeRepository eplooyeeRepository) {
+        this.eplooyeeRepository = eplooyeeRepository;
+    }
+
+    public List<Employee> getEmp() {
+        return eplooyeeRepository.list();
+    }
+
+    public Employee getEmp(Long id) {
+        return eplooyeeRepository.getById(id);
     }
 }

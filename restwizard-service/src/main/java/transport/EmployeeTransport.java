@@ -5,22 +5,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  *
  */
-public class Employee {
-    private String id;
+public class EmployeeTransport {
+    private Long id;
     private String name;
     private String jobTitle;
 
-    public Employee(String id, String name, String jobTitle) {
+    public EmployeeTransport(Long id, String name, String jobTitle) {
         this.id = id;
         this.name = name;
         this.jobTitle = jobTitle;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
